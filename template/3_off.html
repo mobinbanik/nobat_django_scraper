@@ -1,0 +1,519 @@
+<body dir="rtl">
+  <nav class="topbar hide"></nav>
+  <!-- if doctor -->
+  <nav class="topbar">
+    <div class="container">
+      <div class="topbar-content">
+        <a href="https://user.nobat.ir" class="topbar-item">
+          <span> (پروفایل)</span>
+        </a>
+        <a href="https://user.nobat.ir/favorites" class="topbar-item">
+          <span>لیست من</span>
+        </a>
+        <a href="https://user.nobat.ir/turns" class="topbar-item">
+          <span>نوبت‌های من</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <a href="https://nobat.ir/" id="nobat-logo" title="نوبت دات آی آر">
+          <img src="https://nobat.ir/public/ui_v2_0/images/uiv2/nobatLogo.png" alt="nobat-icon">
+        </a>
+      </div>
+    </div>
+  </header>
+  <div class="bread-form-container" data-screen="mobile">
+    <div class="container">
+      <div class="breadcrumbs-container">
+        <div class="breadcrumbs"></div>
+        <button class="btn btn-circle-icon" data-role="show-search-form">
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
+      <form class="search-form hide">
+        <input type="text" class="search-input" placeholder="جستجوی نام‌ پزشک ، تخصص و ...">
+        <button class="btn btn-circle-icon" type="button" data-role="hide-search-form">
+          <i class="fa fa-times"></i>
+        </button>
+        <button type="submit" class="btn btn-circle-icon">
+          <i class="fa fa-search"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+  <div class="bread-form-container" data-screen="desktop">
+    <div class="container">
+      <div class="breadcrumbs-container"></div>
+      <form class="search-form">
+        <input type="text" class="search-input hide" placeholder="جستجوی نام‌ پزشک ، تخصص و ...">
+        <button class="btn btn-circle-icon hide" type="button" data-role="hide-search-form">
+          <i class="fa fa-times"></i>
+        </button>
+        <button type="submit" class="btn btn-circle-icon hide">
+          <i class="fa fa-search"></i>
+        </button>
+        <button type="button" class="btn btn-circle-icon" data-role="show-search-form">
+          <i class="fa fa-search"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+  <!-- put dynamic value of doctor id, nice id and office id -->
+  <div id="doctor" data-drid="105811" data-niceid="36203620" data-officeid="105811">
+    <div class="container">
+      <div class="doctor-ui-content">
+        <div class="doctor-ui-info">
+          <div class="doctor-ui-profile">
+            <img src="https://mystatic.ir/v1/doctor/profile_photo/105811/frame" alt="دکتر سهیلا حسن زاده" title="دکتر سهیلا حسن زاده">
+          </div>
+          <div class="doctor-details">
+            <a href="https://nobat.ir/36203620">
+              <h1 class="doctor-ui-name">
+                <span title="دکتر سهیلا حسن زاده" class="text-ellipsis" style="font-size: 1.3rem;">دکتر سهیلا حسن زاده</span>
+                <img src="https://nobat.ir/public/ui_v2_0/images/uiv2/verified-icon.png" title=" صفحه رسمی نوبت دهی دکتر سهیلا حسن زاده ">
+              </h1>
+            </a>
+            <h2 class="doctor-ui-specialty">متخصص بیماری های داخلی</h2>
+            <h2 class="doctor-ui-specialty">دیابت ، کبد و گوارش ، ریه - رژیم درمانی - عضو دانشگاه علوم پزشکی ایران</h2>
+            <div class="doctor-ui-status online__has-schedule">
+              <span>نوبت دهی</span>
+              <i class="fa fa-credit-card"></i>
+            </div>
+            <div class="doctor-code">
+              <span>متخصص </span>
+              <span>شماره نظام: ۳۱۷۴۲</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="doctor-likes online">
+    <div class="container">
+      <div class="doctor-likes__contents">
+        <span id="followers-count">۷۱۳ نفر</span>
+        <button class="btn btn-circle-icon" data-status="not-followed">
+          <i class="far fa-heart"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- activeOffices array contains all offices but the office -->
+  <!-- that is visicall (turn_type == '1') and has no schedules) -->
+  <div class="container">
+    <div class="flex-wrapper">
+      <div>
+        <div class="days">
+          <div class="swiper swiper-initialized swiper-horizontal swiper-rtl swiper-backface-hidden" style="padding-bottom: 0px;">
+            <div class="swiper-wrapper" id="swiper-wrapper-aeb7f319a6835f5a" aria-live="polite">
+              <div class="swiper-slide swiper-slide-active" role="group" aria-label="1 / 6" style="margin-left: 12px;">
+                <div>
+                  <div class="day " data-daykey="14030510" data-officeid="0" data-mix="6" data-showofficeaddressforconfirm="1">
+                    <strong>چهارشنبه</strong>
+                    <strong>۱۰ مرداد</strong>
+                  </div>
+                  <div class="day-desc">
+                    <strong>امروز</strong>
+                  </div>
+                </div>
+              </div>
+              <div class="swiper-slide swiper-slide-next" role="group" aria-label="2 / 6" style="margin-left: 12px;">
+                <div>
+                  <div class="day " data-daykey="14030511" data-officeid="0" data-mix="6" data-showofficeaddressforconfirm="1">
+                    <strong>پنج شنبه</strong>
+                    <strong>۱۱ مرداد</strong>
+                  </div>
+                  <div class="day-desc">
+                    <strong>فردا</strong>
+                  </div>
+                </div>
+              </div>
+              <div class="swiper-slide" role="group" aria-label="3 / 6" style="margin-left: 12px;">
+                <div>
+                  <div class="day " data-daykey="14030513" data-officeid="0" data-mix="6" data-showofficeaddressforconfirm="1">
+                    <strong>شنبه</strong>
+                    <strong>۱۳ مرداد</strong>
+                  </div>
+                  <div class="day-desc">
+                    <strong>۳ روز دیگر</strong>
+                  </div>
+                </div>
+              </div>
+              <div class="swiper-slide" role="group" aria-label="4 / 6" style="margin-left: 12px;">
+                <div>
+                  <div class="day " data-daykey="14030514" data-officeid="0" data-mix="6" data-showofficeaddressforconfirm="1">
+                    <strong>یکشنبه</strong>
+                    <strong>۱۴ مرداد</strong>
+                  </div>
+                  <div class="day-desc">
+                    <strong>۴ روز دیگر</strong>
+                  </div>
+                </div>
+              </div>
+              <div class="swiper-slide" role="group" aria-label="5 / 6" style="margin-left: 12px;">
+                <div>
+                  <div class="day " data-daykey="14030515" data-officeid="0" data-mix="6" data-showofficeaddressforconfirm="1">
+                    <strong>دوشنبه</strong>
+                    <strong>۱۵ مرداد</strong>
+                  </div>
+                  <div class="day-desc">
+                    <strong>۵ روز دیگر</strong>
+                  </div>
+                </div>
+              </div>
+              <div class="swiper-slide" role="group" aria-label="6 / 6" style="margin-left: 12px;">
+                <div>
+                  <div class="day " data-daykey="14030516" data-officeid="0" data-mix="6" data-showofficeaddressforconfirm="1">
+                    <strong>سه شنبه</strong>
+                    <strong>۱۶ مرداد</strong>
+                  </div>
+                  <div class="day-desc">
+                    <strong>۶ روز دیگر</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+          </div>
+        </div>
+        <div class="comments-container" data-nosnippet="">
+          <div class="comments-summary">
+            <span>۲۹۰ نفر</span>
+            <div class="stars">
+              <div class="stars-value" style="width: 94%"></div>
+            </div>
+          </div>
+          <iframe src="https://nobat.ir/doctor/comments/drId-105811" frameborder="0" height="300"></iframe>
+          <a data-role="comments-popup" href="https://plugin.nobat.ir/dr/comments/105811" target="popup" class="btn btn-rounded btn-gray" rel="nofollow"> لیست کامل نظرات </a>
+        </div>
+        <div class="doctor-bio">
+          <strong>اطلاعات تکمیلی</strong>
+          <div class="doctor-bio-content">
+            <p class="nl-to-br">*فارغ التحصیل از دانشگاه علوم پزشکی شهید بهشتی <br>
+              <br> *دارای پروانه طبابت از کشور سوئد <br>
+              <br> *عضو انجمن دیابت ایران <br>
+              <br> درمان پوکی استخوان، واریس و زخم با استفاده از دستگاه مگنت <br>
+              <br> درمان التهاب تاندون ها و مفاصل ، درمان آرتروز و زخم های دیابتی با استفاده از دستگاه لیزر MLS <br>
+              <br> رژیم درمانی و آنالیز بدن
+            </p>
+            <button class="btn" data-role="show-full-bio"> مشاهده بیشتر ... </button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="offices">
+          <div class="office" data-officeid="105811">
+            <strong class="office-title">مطب سعادت آباد</strong>
+            <div class="office-address" title="آدرس مطب دکتر سهیلا حسن زاده">
+              <strong>تهران</strong>
+              <strong>سعادت آباد - خیابان 25 شرقی ( شهید قره تپه ای ) - ساختمان سینا پلاک 6 - طبقه چهارم واحد 16</strong>
+            </div>
+            <div class="office-description">
+              <p>دکتر سهیلا حسن زاده <br>
+                <br> متخصص بیماری های داخلی : آسم و آلرژی ( اسپیرومتری ) ، گوارش وکبد چرب ،غدد (دیابت و تیرویید ) ، رژیم درمانی <br>
+                <br> عضو انجمن دیابت ایران <br>
+                <br> ساعات کار مطب: <br>
+                <br> مطب سعادت آباد- روزهای ویزیت یکشنبه تا چهارشنبه از ساعت 11:00 تا 18:00 <br>
+                <br> پنجشنبه ها فقط از ساعت 14 الی 15 تعداد محدود <br>
+                <br>کلینیک دیابت تابان شهرک غرب فقط پنج شنبه ها از ساعت 11:00 تا 13:00 <br>
+                <br>------ <br>
+                <br> مشاوره رژیم درمانی برای بیماران دیابتی ، دیابت بارداری ، دوران شیردهی ، کلیوی ، فشار خون ، کاهش و افزایش وزن برگزاری دوره های ویژه 12 هفته ای جهت بهبود کامل دیابت و کاهش وزن بدون بازگشت با استفاده از رژیم غذایی منحصر به فرد و آموزش تکنیک های مدیریت استرس ، اشتها ، تغییر باورها و الگو های غذایی
+              </p>
+            </div>
+            <div class="office-holiday">
+              <ul></ul>
+            </div>
+            <div class="office-phone" title="شماره تلفن مطب دکتر سهیلا حسن زاده">
+              <a href="tel:02188682489" rel="nofollow">۰۲۱-۸۸۶۸۲۴۸۹</a>
+              <i class="fa fa-phone"></i>
+            </div>
+            <div class="office-phone" title="شماره تلفن مطب دکتر سهیلا حسن زاده">
+              <a href="tel:09332894486" rel="nofollow">۰۹۳۳-۲۸۹-۴۴۸۶</a>
+              <i class="fa fa-mobile"></i>
+            </div>
+            <div class="office-actions">
+              <button title=" دریافت نوبت اینترنتی دکتر سهیلا حسن زاده" class="btn btn-green " data-role="get-turn">دریافت نوبت اینترنتی</button>
+              <button class="btn btn-gray loading opacity-hide" data-role="show-tells">نمایش کامل تلفن</button>
+            </div>
+          </div>
+          <!-- we should not see visicall office yet. that is why we added class hide -->
+          <div class="office hide" data-officeid="201558">
+            <div class="office-visicall">
+              <strong class="visicall-title">مشاوره تلفنی ( ویزیت غیر حضوری )</strong>
+              <div class="visicall-content">
+                <div class="visicall-term">
+                  <span>*</span>
+                  <p>نوبت مکالمه صرفا برای ویزیت غیرحضوری میباشد و مطب پذیرای حضوری شما نخواهد بود</p>
+                </div>
+                <div class="visicall-term">
+                  <span>*</span>
+                  <p>پس از ثبت نوبت مکالمه در صورت تمایل میتوانید مدارک پزشکی نظیر برگه آزمایش , تصاویر رادیولوژی و سونوگرافی و خود را برای دکتر قرار دهید</p>
+                </div>
+                <div class="visicall-term">
+                  <span>*</span>
+                  <p>پزشک با شما تماس خواهد گرفت و غیر حضوری ویزیت می شوید</p>
+                </div>
+                <button class="btn btn-purple" data-role="get-visicall-turn">دریافت نوبت مکالمه</button>
+              </div>
+            </div>
+          </div>
+          <div class="office" data-officeid="124797">
+            <strong class="office-title">کلینیک دیابت تابان</strong>
+            <div class="office-address" title="آدرس مطب دکتر سهیلا حسن زاده">
+              <strong>تهران</strong>
+              <strong>بلوار دادمان انتهای خیابان درختی پلاک ۱۰۰</strong>
+            </div>
+            <div class="office-description">
+              <p>روزهای پنجشنبه ساعت ۱۱ صبح تا 2 بعد از ظهر</p>
+            </div>
+            <div class="office-holiday">
+              <ul></ul>
+            </div>
+            <div class="office-phone" title="شماره تلفن مطب دکتر سهیلا حسن زاده">
+              <a href="tel:02122377250" rel="nofollow">۰۲۱-۲۲۳۷۷۲۵۰</a>
+              <i class="fa fa-phone"></i>
+            </div>
+            <div class="office-actions">
+              <button title=" دریافت نوبت اینترنتی دکتر سهیلا حسن زاده" class="btn btn-green " data-role="get-turn">دریافت نوبت اینترنتی</button>
+              <button class="btn btn-gray loading opacity-hide" data-role="show-tells">نمایش کامل تلفن</button>
+            </div>
+          </div>
+        </div>
+        <!-- if there is only one active office we should see day-boxes (similar to days) -->
+        <!-- if there are more that one active office, we should see office-list -->
+        <div class="office-list">
+          <h2 class="office-list-title">
+            <span>لطفاً مطب مورد نظر خود را انتخاب نمایید:</span>
+          </h2>
+          <div class="office-item" data-officeid="105811">
+            <div class="office-item-content">
+              <div class="office-item-title">
+                <span>مطب سعادت آباد</span>
+                <i class="fa fa-chevron-right"></i>
+              </div>
+              <div class="office-item-details">
+                <strong>دریافت نوبت اینترنتی</strong>
+                <p class="office-item-address">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>تهران سعادت آباد - خیابان 25 شرقی ( شهید قره تپه ای ) - ساختمان سینا پلاک 6 - طبقه چهارم واحد 16</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="office-item" data-officeid="201558">
+            <div class="office-item-content">
+              <div class="office-item-title">
+                <span>نوبت مکالمه</span>
+                <i class="fa fa-chevron-right"></i>
+              </div>
+              <div class="office-item-details">
+                <strong>مشاوره تلفنی با پزشک (ویزیت از راه دور)</strong>
+                <p class="office-item-hint">
+                  <i class="fas fa-exclamation-circle"></i>
+                  <span>نوبت مکالمه صرفا برای ویزیت غیرحضوری میباشد.</span>
+                </p>
+                <p class="office-item-hint">
+                  <i class="fas fa-exclamation-circle"></i>
+                  <span>مطب پذیرای حضوری شما نخواهد بود.</span>
+                </p>
+                <p class="office-item-hint">
+                  <i class="fas fa-exclamation-circle"></i>
+                  <span>پس از ثبت نوبت در صورت تمایل میتوانید مدارک پزشکی اعم از برگه آزمایش ، تصاویر رادیولوژی ، تصاویر سونوگرافی و سایر مدارک خود را برای دکتر قرار دهید.</span>
+                </p>
+                <p class="office-item-hint">
+                  <i class="fas fa-exclamation-circle"></i>
+                  <span>پزشک با شما تماس خواهد گرفت و غیر حضوری ویزیت می شوید.</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="office-item" data-officeid="124797">
+            <div class="office-item-content">
+              <div class="office-item-title">
+                <span>کلینیک دیابت تابان</span>
+                <i class="fa fa-chevron-right"></i>
+              </div>
+              <div class="office-item-details">
+                <strong>دریافت نوبت اینترنتی</strong>
+                <p class="office-item-address">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>تهران بلوار دادمان انتهای خیابان درختی پلاک ۱۰۰</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="followers" data-nosnippet="">
+    <div class="container">
+      <strong class="followers-title"> کسانی که <span> دکتر سهیلا حسن زاده</span> را پیشنهاد میکنند: </strong>
+      <div class="followers-items">
+        <div class="follower">
+          <strong class="follower-name">سرکار خانم دکتر راضیه نیری فرد</strong>
+          <span class="follower-specialty">روانپزشکی و روانشناسی</span>
+          <img class="follower-profile" src="https://mystatic.ir/v1/doctor/profile_photo/121186" alt="سرکار خانم دکتر راضیه نیری فرد" title="سرکار خانم دکتر راضیه نیری فرد">
+        </div>
+        <div class="follower">
+          <strong class="follower-name">جناب آقای دکتر شهریار شهریاری</strong>
+          <span class="follower-specialty">قلب و عروق</span>
+          <img class="follower-profile" src="https://mystatic.ir/v1/doctor/profile_photo/120527" alt="جناب آقای دکتر شهریار شهریاری" title="جناب آقای دکتر شهریار شهریاری">
+        </div>
+      </div>
+      <div class="followers-iframe-wrapper">
+        <iframe src="https://plugin.nobat.ir/dr/support/121186"></iframe>
+      </div>
+    </div>
+  </div>
+  <footer class="footer footer-lightblue">
+    <div class="container">
+      <div class="footer-content">
+        <a href="https://nobat.ir/find/city-1/c-12/" class="btn btn-rounded">لیست پزشکان داخلی تهران</a>
+      </div>
+    </div>
+  </footer>
+  <footer class="footer footer-teal">
+    <div class="container">
+      <div class="footer-content">
+        <a href="https://user.nobat.ir/dr/signup" rel="nofollow" class="btn btn-rounded">عضویت پزشکان</a>
+        <a href="https://nobat.ir/terms/" rel="nofollow" class="btn btn-rounded">قوانین سایت</a>
+        <a href="https://nobat.ir/contact-us" rel="nofollow" class="btn btn-rounded">تلفن های پشتیبانی</a>
+      </div>
+    </div>
+    <!-- Google tag (gtag.js) -->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KEKNLD11WM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-KEKNLD11WM');
+    </script>
+  </footer>
+  <div class="fixed-menu">
+    <div data-role="fixed-menu-turn">
+      <i class="fa fa-calendar"></i>
+      <button>دریافت نوبت</button>
+    </div>
+    <div data-role="fixed-menu-location" style="display: none;">
+      <i class="fa fa-map-marker-alt"></i>
+      <button>مسیریابی</button>
+    </div>
+    <div data-role="fixed-menu-phone">
+      <i class="fa fa-phone"></i>
+      <button>تماس</button>
+    </div>
+  </div>
+  <!-- renew page panel -->
+  <div class="panel-wrapper" data-role="renew-page-panel">
+    <div class="panel-content">
+      <div class="renew-panel-alert">
+        <p>
+          <i class="fas fa-exclamation-circle fa-2x"></i> این بخش و پرداخت آن ویژه پزشکان جهت تمدید صفحه پزشک می باشد و هیچ ارتباطی با دریافت نوبت ندارد.
+        </p>
+        <p>از رفتن به بخش تمدید صفحه مطمئن هستید ؟</p>
+      </div>
+      <div class="renew-panel-actions">
+        <button class="btn btn-rounded" data-role="renew-page-cancel"> انصراف </button>
+        <button class="btn btn-rounded" data-role="renew-page-redirect"> تمدید </button>
+      </div>
+    </div>
+  </div>
+  <!-- locations panel -->
+  <div class="panel-wrapper" data-role="locations-panel">
+    <div class="panel-content"></div>
+  </div>
+  <!-- tells panel -->
+  <div class="panel-wrapper" data-role="tells-panel">
+    <div class="panel-content">
+      <div class="tells-panel-item" data-officeid="105811">
+        <strong>مطب سعادت آباد</strong>
+        <p>سعادت آباد - خیابان 25 شرقی ( شهید قره تپه ای ) - ساختمان سینا پلاک 6 - طبقه چهارم واحد 16</p>
+        <div class="office-phone">
+          <a href="tel:02188682489" rel="nofollow">۰۲۱-۸۸۶۸۲۴۸۹</a>
+          <i class="fa fa-phone"></i>
+        </div>
+        <div class="office-phone">
+          <a href="tel:09332894486" rel="nofollow">۰۹۳۳-۲۸۹-۴۴۸۶</a>
+          <i class="fa fa-mobile"></i>
+        </div>
+      </div>
+      <div class="tells-panel-item" data-officeid="124797">
+        <strong>کلینیک دیابت تابان</strong>
+        <p>بلوار دادمان انتهای خیابان درختی پلاک ۱۰۰</p>
+        <div class="office-phone">
+          <a href="tel:02122377250" rel="nofollow">۰۲۱-۲۲۳۷۷۲۵۰</a>
+          <i class="fa fa-phone"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- iframe -->
+  <div class="iframe-wrapper hide">
+    <iframe></iframe>
+    <button id="close-iframe-btn" class="btn btn-circle-icon">
+      <i class="fa fa-arrow-left"></i>
+    </button>
+  </div>
+  <!-- scroll to top -->
+  <!-- scroll to top stuff -->
+  <div id="pixel-to-watch"></div>
+  <button class="btn btn-circle-icon back-to-top">
+    <i class="fa fa-chevron-up"></i>
+  </button>
+  <!-- common <script src="..."></script> between all php files -->
+  <!-- toastify -->
+  <script src="https://nobat.ir/public/ui_v2_0/libs/toastify/toastify.min.js"></script>
+  <!-- jquery -->
+  <script src="https://nobat.ir/public/ui_v2_0/libs/jquery/jquery.min.js"></script>
+  <script src="https://nobat.ir/public/ui_v2_0/js/uiv2_requests.js"></script>
+  <script src="https://nobat.ir/public/ui_v2_0/js/uiv2_helper.js"></script>
+  <script src="https://nobat.ir/public/ui_v2_0/js/uiv2_doctor.js?6723742"></script>
+  <div id="o_h"></div>
+  <script>
+    $(document).ready(function() {
+      $.ajax('/inc/o/h', {
+        type: "post",
+        data: {
+          'o_drName': 'دکتر سهیلا حسن زاده',
+          'o_officeID': '105811',
+          'o_w': '0'
+        },
+        timeout: 20000,
+        contentType: "application/x-www-form-urlencoded;charset=ISO-8859-15",
+        success: function(resp) {
+          $('#o_h').html(resp);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          var msg = "status: ";
+        }
+      });
+    })
+  </script>
+  <!-- state -->
+  <script>
+    $(function() {
+      $(function() {
+        var referrer = document.referrer;
+        var dataPost = {
+          doctorId: '105811',
+          referrer: referrer,
+        }
+        $.ajax({
+          url: 'https://stats.nobat.ir/v1/stats',
+          data: dataPost,
+          type: 'post'
+        })
+      });
+    })
+  </script>
+  <!-- Schema -->
+  <!-- vip awoc -->
+  <!-- vip stage -->
+</body>

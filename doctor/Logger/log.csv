@@ -1,0 +1,13 @@
+Time,Level,Messages
+2024-07-08 07:59:34,INFO,This is an info message | Additional info
+2024-07-08 08:00:30,INFO,This is an info message | Additional info
+2024-07-08 08:00:46,INFO,This is an info message | Additional info
+2024-07-08 08:00:56,INFO,This is an info message | Additional info
+2024-07-08 08:00:56,WARNING,This is a warning message
+2024-07-08 08:00:56,ERROR,This is an error message | Details of the error
+2024-07-08 08:01:29,INFO,This is an info message | Additional info
+2024-07-08 08:01:29,WARNING,This is a warning message
+2024-07-08 08:01:29,ERROR,This is an error message | Details of the error
+2024-07-08 08:02:30,INFO,This is an info message | Additional info
+2024-07-08 08:02:30,WARNING,This is a warning message
+2024-07-08 08:02:30,ERROR,This is an error message | Details of the error
