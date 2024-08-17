@@ -1,5 +1,13 @@
 from django.contrib import admin
-from .models import Doctor, Image, Test
+from .models import (
+    Doctor,
+    Image,
+    Test,
+    ProfileUrlToScrape,
+    City,
+    Speciality,
+    Neighborhood,
+)
 
 
 @admin.register(Doctor)
@@ -24,4 +32,37 @@ class ImageAdmin(admin.ModelAdmin):
 @admin.register(Test)
 class TestAdmin(admin.ModelAdmin):
     list_display = ('pk',)
+
+
+@admin.register(ProfileUrlToScrape)
+class ProfileUrlToScrapeAdmin(admin.ModelAdmin):
+    list_display = (
+        'pk',
+        'profile_url',
+        'is_scraped',
+        'city',
+        'expertise_category',
+    )
+    list_filter = ('is_scraped', 'city', 'expertise_category')
+
+
+@admin.register(City)
+class CityAdmin(admin.ModelAdmin):
+    list_display = ('name', 'number')
+    list_filter = ('name',)
+    search_fields = ('name', 'number')
+
+
+@admin.register(Speciality)
+class SpecialityAdmin(admin.ModelAdmin):
+    list_display = ('name', 'number')
+    list_filter = ('name',)
+    search_fields = ('name', 'number')
+
+
+@admin.register(Neighborhood)
+class NeighborhoodAdmin(admin.ModelAdmin):
+    list_display = ('name', 'number')
+    list_filter = ('name',)
+    search_fields = ('name', 'number')
 

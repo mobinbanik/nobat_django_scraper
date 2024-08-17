@@ -100,16 +100,16 @@ class Doctor(models.Model):
     # }
     def add_office_data(
             self,
-            office_id: int,
-            office_type: str,
-            office_title: str,
-            office_city: str,
-            office_address: str,
-            office_description: str,
-            office_holiday: str,
+            office_id: int, # Ok!
+            office_type: str, # Ok!
+            office_title: str, # Ok!
+            office_city: str, # Ok!
+            office_address: str, # Ok!
+            office_description: str, # Ok!
+            office_holiday: str, # Ok!
             office_phone: list[str],
-            office_lat: str,
-            office_lon: str,
+            office_lat: str, # Ok!
+            office_lon: str, # Ok!
     ):
         json_office = self.office_data if self.office_data else []
         new_office_data = {
@@ -158,3 +158,59 @@ class Image(models.Model):
 class Test(models.Model):
     text = models.TextField()
 
+
+class ProfileUrlToScrape(models.Model):
+    profile_url = models.URLField(unique=True)
+    is_scraped = models.BooleanField(default=False)
+    city = models.ForeignKey(
+        'City',
+        on_delete=models.PROTECT,
+        related_name='city_profiles_url_to_scrape',
+        null=True,
+        blank=True,
+    )
+    expertise_category = models.ForeignKey(
+        'Speciality',
+        on_delete=models.PROTECT,
+        related_name='expertise_profiles_url_to_scrape',
+        null=True,
+        blank=True,
+    )
+    neighborhood = models.ForeignKey(
+        'Neighborhood',
+        on_delete=models.PROTECT,
+        related_name='neighborhood_profiles_url_to_scrape',
+        blank=True,
+        null=True,
+    )
+    doctor = models.OneToOneField(
+        Doctor,
+        on_delete=models.SET_NULL,
+        related_name='profiles_url_to_scrape',
+        null=True,
+        blank=True,
+    )
+
+
+class City(models.Model):
+    name = models.CharField(max_length=255)
+    number = models.IntegerField(unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Speciality(models.Model):
+    name = models.CharField(max_length=255)
+    number = models.IntegerField(unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Neighborhood(models.Model):
+    name = models.CharField(max_length=255)
+    number = models.IntegerField(unique=True)
+
+    def __str__(self):
+        return self.name

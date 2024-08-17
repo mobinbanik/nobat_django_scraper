@@ -4,9 +4,19 @@ import undetected_chromedriver
 from .models import Doctor
 
 
-def get_comments(text):
-    # TODO get comments
-    pass
+def get_comments(data_drid):
+    url = 'https://nobat.ir/api/public/doctor/comments/all/{data_drid}/0'
+    response = requests.get(url.format(data_drid=data_drid))
+    return response.json()
+
+
+def get_tells(office_id):
+    url = 'https://nobat.ir/api/public/doctor/office/tells'
+    payload = {
+        'office_id': office_id,
+    }
+    response = requests.request('POST', url, data=payload)
+    return response.json()
 
 
 def parse_office(text: str, office_type: str):
@@ -32,15 +42,21 @@ def parse_office(text: str, office_type: str):
     if _office_city_address_tag:
         _office_city_address_tag = _office_city_address_tag.find_all('strong')
         _office_city = _office_city_address_tag[0].text
-        _office_address = _office_city_address_tag[1].text
+        _office_address = str(_office_city_address_tag[1])
 
     _office_description = soup.find('div', attrs={'class': 'office-description'})
     if _office_description:
-        _office_description = _office_description.text
+        _office_description = str(_office_description)
 
     _office_holiday = soup.find('div', attrs={'class': 'office-holiday'})
     if _office_holiday:
         _office_holiday = _office_holiday.text
+
+    _office_gallery_tag = soup.find('div', attrs={'class': 'office-gallery'})
+    _office_gallery = list()
+    if _office_gallery_tag:
+        _office_gallery_tag = _office_gallery_tag.find_all('img')
+        _office_gallery = [x['src'] for x in _office_gallery_tag]
 
     _office_map_tag = soup.find('div', attrs={'class': 'office-map-container'})
     _office_lat = None
@@ -60,6 +76,8 @@ def parse_office(text: str, office_type: str):
         'office_holiday': _office_holiday,
         'office_lat': _office_lat,
         'office_lon': _office_lon,
+        'office_tells': get_tells(_office_id),
+        '_office_gallery': _office_gallery,
     }
 
 
@@ -124,8 +142,9 @@ def scrape(text) -> dict[str, str]:
     extra_info_tag = soup.find('p', attrs={'class': 'nl-to-br'})
     _extra_info = str()
     if extra_info_tag:
-        for info in extra_info_tag:
-            _extra_info += info.text
+        _extra_info = str(extra_info_tag)
+        # for info in extra_info_tag:
+        #     _extra_info += info.text
 
     # -\/-
     _social_media_tag = soup.find('div', attrs={'class': 'social-media'})
@@ -164,6 +183,7 @@ def scrape(text) -> dict[str, str]:
         'data_niceid': _data_niceid,
         'offices': offices_json_list,
         'social_media': _social_media,
+        'comments': get_comments(_data_drid),
     }
 
 
