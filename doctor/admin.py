@@ -10,16 +10,26 @@ from .models import (
 )
 
 
+class ImageInLine(admin.TabularInline):
+    model = Image
+    extra = 0
+    fields = ('preview', 'office_id',)  # ویژگی‌های دلخواه خود را اضافه کنید
+    readonly_fields = ('preview', 'office_id',)
+
+
 @admin.register(Doctor)
 class DoctorAdmin(admin.ModelAdmin):
-    list_display = ('name', 'city_name', 'expertise_name_1', 'education_level', 'is_verified')
+    list_display = ('preview', 'name', 'city_name', 'expertise_name_1', 'education_level', 'is_verified')
     search_fields = ('name', 'city_name', 'expertise_name_1', 'education_level')
     list_filter = ('is_verified', 'expertise_category', 'city')
+    inlines = [
+        ImageInLine,
+    ]
 
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ('doctor', 'preview')
+    list_display = ('doctor', 'preview', 'office_id')
     search_fields = ('doctor__name',)
     readonly_fields = ('preview',)
 

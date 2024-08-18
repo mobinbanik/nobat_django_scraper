@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لیست دکترها</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #ccc 1px solid;
+        }
+        header h1 {
+            text-align: center;
+            margin: 0;
+        }
+        .doctor-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .doctor {
+            background: #fff;
+            margin: 15px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: calc(33% - 30px);
+            box-sizing: border-box;
+        }
+        .doctor img {
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 50%;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .doctor h2 {
+            margin: 0 0 10px;
+            font-size: 1.2em;
+        }
+        .doctor p {
+            margin: 0 0 10px;
+            line-height: 1.5;
+        }
+        @media (max-width: 768px) {
+            .doctor {
+                width: calc(50% - 30px);
+            }
+        }
+        @media (max-width: 480px) {
+            .doctor {
+                width: calc(100% - 30px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>لیست دکترها</h1>
+        </div>
+    </header>
+    <div class="container">
+        <div class="doctor-list">
+            {% for doctor in doctors %}
+                <div class="doctor">
+                    <img src="{{ doctor.doctor_image.url }}" alt="{{ doctor.name }}">
+                    <h2>{{ doctor.name }}</h2>
+                    <p><strong>کد نظام پزشکی:</strong> {{ doctor.nezam_number }}</p>
+                    <p><strong>شهر:</strong> {{ doctor.city_name }}</p>
+                    <p><strong>تخصص اول:</strong> {{ doctor.expertise_name_1 }}</p>
+                    <p><strong>تخصص دوم:</strong> {{ doctor.expertise_name_2 }}</p>
+                    <p><strong>سطح تحصیلات:</strong> {{ doctor.education_level }}</p>
+                    <p><strong>تعداد لایک:</strong> {{ doctor.like_count }}</p>
+                    <p><a href="{% url  "doctor_profile" doctor.id %}">مشاهده پروفایل</a></p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

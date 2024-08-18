@@ -1,7 +1,89 @@
+import os
 import requests
 import bs4
-import undetected_chromedriver
+# import undetected_chromedriver
 from .models import Doctor
+from django.core.files import File
+from django.core.files.temp import NamedTemporaryFile
+import uuid
+
+
+def download_image_and_save_to_model(url, model_instance, image_field_name):
+    # دانلود تصویر از URL
+    response = requests.get(url)
+    
+    # بررسی وضعیت ریسپانس
+    if response.status_code == 200:
+        img_temp = NamedTemporaryFile()
+        img_temp.write(response.content)
+        img_temp.flush()
+
+        # ساخت نام فایل منحصر به فرد
+        base_name = f"{model_instance.data_drid}_{model_instance.name}"
+        file_extension = '.jpg'
+        unique_name = f"{base_name}_{uuid.uuid4().hex}{file_extension}"  # اضافه کردن UUID به نام فایل
+
+        # ذخیره تصویر در فیلد مدل
+        image_field = getattr(model_instance, image_field_name)
+        img_temp.seek(0)  # بازنشانی مکان فایل به ابتدای آن
+        image_field.save(unique_name, File(img_temp), save=True)
+
+        # بستن و حذف فایل موقت
+        img_temp.close()
+    else:
+        print(f"Failed to download image. Status code: {response.status_code}")
+
+
+
+def download_gallery_for_model(url, model_instance, image_field_name):
+    # دانلود تصویر از URL
+    response = requests.get(url)
+    
+    # بررسی وضعیت ریسپانس
+    if response.status_code == 200:
+        img_temp = NamedTemporaryFile()
+        img_temp.write(response.content)
+        img_temp.flush()
+
+        # ساخت نام فایل منحصر به فرد
+        base_name = f"{model_instance.doctor.data_drid}_{model_instance.doctor.name}"
+        file_extension = '.jpg'
+        unique_name = f"{base_name}_{uuid.uuid4().hex}{file_extension}"  # اضافه کردن UUID به نام فایل
+
+        # ذخیره تصویر در فیلد مدل
+        image_field = getattr(model_instance, image_field_name)
+        img_temp.seek(0)  # بازنشانی مکان فایل به ابتدای آن
+        image_field.save(unique_name, File(img_temp), save=True)
+
+        # بستن و حذف فایل موقت
+        img_temp.close()
+    else:
+        print(f"Failed to download image. Status code: {response.status_code}")
+
+
+
+def extract_number(text):
+    # تعریف یک دیکشنری برای تبدیل اعداد فارسی به اعداد انگلیسی
+    persian_to_english = {
+        '۰': '0',
+        '۱': '1',
+        '۲': '2',
+        '۳': '3',
+        '۴': '4',
+        '۵': '5',
+        '۶': '6',
+        '۷': '7',
+        '۸': '8',
+        '۹': '9',
+    }
+    
+    # جایگزینی اعداد فارسی با اعداد انگلیسی
+    english_text = ''.join([persian_to_english[char] if char in persian_to_english else char for char in text])
+    
+    # استخراج اعداد از رشته تبدیل شده
+    numbers = ''.join([char for char in english_text if char.isdigit()])
+    
+    return numbers
 
 
 def get_comments(data_drid):
@@ -120,6 +202,7 @@ def scrape(text) -> dict[str, str]:
     if _nezam_number_tag:
         _nezam_number_tag = _nezam_number_tag.find_all('span')
         _doctor_code = _nezam_number_tag[1].text
+        _doctor_code = extract_number(_doctor_code)
         _education_level = _nezam_number_tag[0].text
 
     # -\/-
@@ -132,6 +215,7 @@ def scrape(text) -> dict[str, str]:
     _like_count = soup.find('span', attrs={'id': 'followers-count'})
     if _like_count:
         _like_count = _like_count.text
+        _like_count = extract_number(_like_count)
 
     # -\/-
     _comment_link = soup.find('a', attrs={'class': 'btn btn-rounded btn-gray'})
