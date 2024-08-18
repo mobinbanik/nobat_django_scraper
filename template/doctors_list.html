@@ -10,6 +10,7 @@
             background-color: #f4f4f4;
             margin: 0;
             padding: 0;
+            direction: rtl;
         }
         .container {
             width: 80%;
@@ -74,9 +75,9 @@
             <h1>لیست دکترها</h1>
         </div>
     </header>
-    <div class="container">
+    <div class="container" >
         <div class="doctor-list">
-            {% for doctor in doctors %}
+            {% for doctor in page_obj %}
                 <div class="doctor">
                     <img src="{{ doctor.doctor_image.url }}" alt="{{ doctor.name }}">
                     <h2>{{ doctor.name }}</h2>
@@ -89,6 +90,25 @@
                     <p><a href="{% url  "doctor_profile" doctor.id %}">مشاهده پروفایل</a></p>
                 </div>
             {% endfor %}
+        </div>
+
+        <!-- پیجنیشن -->
+        <div class="pagination" >
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; اول</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">قبلی</a>
+                {% endif %}
+
+                <span class="current">
+                    صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">بعدی</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">آخر &raquo;</a>
+                {% endif %}
+            </span>
         </div>
     </div>
 </body>

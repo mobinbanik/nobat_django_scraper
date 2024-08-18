@@ -4,135 +4,183 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>پروفایل دکتر</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f8f8;
             margin: 0;
             padding: 0;
-
-        }
-        .container {
-            width: 80%;
-            margin: auto;
-            overflow: hidden;
+            color: #333;
         }
         header {
-            background: #333;
-            color: #fff;
-            padding-top: 30px;
-            min-height: 70px;
-            border-bottom: #ccc 1px solid;
-        }
-        header h1 {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
             text-align: center;
-            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
         }
-        .profile {
-            background: #fff;
-            margin: 15px 0;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .profile img {
-            max-width: 200px;
-            max-height: 200px;
-            border-radius: 50%;
-            display: block;
-            margin-bottom: 10px;
-        }
-        .profile h2 {
-            margin: 0 0 10px;
-            font-size: 1.5em;
-        }
-        .profile p {
-            margin: 0 0 10px;
-            line-height: 1.5;
-        }
-        .images {
+        .container {
+            width: 85%;
+            margin: 20px auto;
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
+            gap: 20px;
+            direction: rtl;
         }
-        .images img {
-            max-width: 200px;
-            max-height: 200px;
-            border: 1px solid #ddd;
+        .profile-sidebar {
+            width: 100%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .profile-sidebar img {
+            width: 200px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .profile-sidebar h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .profile-sidebar p {
+            margin: 5px 0;
+            text-align: center;
+        }
+        .profile-sidebar .rating {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #f39c12;
         }
         .offices {
-            margin-top: 20px;
+            margin-top: 30px;
         }
         .office {
-            background: #fff;
             border: 1px solid #ddd;
-            border-radius: 5px;
-            margin-bottom: 15px;
+            border-radius: 10px;
             padding: 15px;
+            margin-bottom: 20px;
         }
-        .office h3 {
+        .office h4 {
             margin: 0 0 10px;
-            font-size: 1.2em;
+            font-size: 18px;
         }
         .office p {
-            margin: 0 0 10px;
+            margin: 5px 0;
             line-height: 1.5;
         }
-        .office-description {
-            margin: 10px 0;
+        .office .office-gallery {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
         }
-        .office-gallery img {
-            max-width: 100px;
-            max-height: 100px;
-            margin: 5px;
+        .office .office-gallery img {
+            width: 80px;
+            height: 80px;
+            border-radius: 5px;
+            object-fit: cover;
             border: 1px solid #ddd;
+        }
+        .map {
+            width: 100%;
+            height: 300px;
+            margin-top: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+        .comments-section {
+            margin-top: 30px;
+            direction: rtl;
+        }
+        .comments-box {
+            max-height: 400px;
+            overflow-y: scroll;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+        .comment {
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+        }
+        .comment:last-child {
+            border-bottom: none;
+        }
+        .comment p {
+            margin: 0;
+            line-height: 1.5;
+        }
+        .comment strong {
+            color: #555;
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="container">
-            <h1>پروفایل دکتر</h1>
-        </div>
+        پروفایل دکتر
     </header>
     <div class="container">
-        <div class="profile">
+        <div class="profile-sidebar">
             <img src="{{ doctor.doctor_image.url }}" alt="{{ doctor.name }}">
             <h2>{{ doctor.name }}</h2>
             <p><strong>کد نظام پزشکی:</strong> {{ doctor.nezam_number }}</p>
             <p><strong>شهر:</strong> {{ doctor.city_name }}</p>
-            <p><strong>تخصص اول:</strong> {{ doctor.expertise_name_1 }}</p>
+            <p><strong>تخصص:</strong> {{ doctor.expertise_name_1 }}</p>
             <p><strong>تخصص دوم:</strong> {{ doctor.expertise_name_2 }}</p>
             <p><strong>سطح تحصیلات:</strong> {{ doctor.education_level }}</p>
-            <p><strong>تعداد لایک:</strong> {{ doctor.like_count }}</p>
-            <p><strong>توضیحات اضافی:</strong></p>
-            <p class="nl-to-br">{{ doctor.extra_info|safe }}</p>
-            <p><a href="{{ doctor.profile_url }}">مشاهده پروفایل آنلاین</a></p>
-            <div class="images">
-                {% for image in doctor.images.all %}
-                    <img src="{{ image.image.url }}" alt="تصویر اضافی">
-                {% endfor %}
-            </div>
+            <p><strong>تعداد لایک‌ها:</strong> {{ doctor.like_count }}</p>
+            <br>
+            <p><strong>توضیحات</strong> {{ doctor.extra_info | safe }}</p>
+
+
             <div class="offices">
+                <h3>دفاتر دکتر</h3>
                 {% for office in doctor.office_data %}
                     <div class="office">
-                        <h3>{{ office.office_title }}</h3>
-                        <p><strong>نوع دفتر:</strong> {{ office.office_type }}</p>
+                        <h4>{{ office.office_title }}</h4>
                         <p><strong>شهر:</strong> {{ office.office_city }}</p>
                         <p><strong>آدرس:</strong> {{ office.office_address|safe }}</p>
-                        <p class="office-description">{{ office.office_description|safe }}</p>
-                        <p><strong>تلفن‌ها:</strong></p>
-                        <ul>
-                            {% for tell in office.office_tells %}
-                                <li>{{ tell.tel }} - <a href="tel:{{ tell.call }}">تماس</a></li>
-                            {% endfor %}
-                        </ul>
+                        <p>{{ office.office_description|safe }}</p>
                         <div class="office-gallery">
                             {% for img in office.office_gallery %}
                                 <img src="{{ img }}" alt="تصویر دفتر">
                             {% endfor %}
                         </div>
+                        <p><a href="https://maps.google.com/?q={{ office.office_lat }},{{ office.office_lon }}" target="_blank">
+                            مشاهده نقشه در گوگل مپ
+                        </a></p>
                     </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="comments-section">
+            <div class="rating">
+                امتیاز کلی: {{ average_rating | floatformat}}
+            </div>
+            <h3>نظرات کاربران</h3>
+
+            <div class="comments-box">
+                {% for comment_list in doctor.comments_data %}
+                    {% for comment in comment_list %}
+                        {% if comment.show %}
+                            <div class="comment">
+                                <p><strong>امتیاز:</strong> {{ comment.star_persent }}</p>
+                                <p>{{ comment.text }}</p>
+                                <p><em>{{ comment.date }}</em></p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 {% endfor %}
             </div>
         </div>

@@ -7,7 +7,7 @@ urlpatterns = [
     path('', run_scraper, name='run_scraper'),
     path('pwd/', pwd, name='pwd'),
     path('doctor/<int:doctor_id>/', doctor_profile, name='doctor_profile'),
-     path('doctors/', doctors_list, name='doctors_list'),
+    path('doctors/', doctors_list, name='doctors_list'),
 ]
 
 

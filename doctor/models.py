@@ -68,7 +68,7 @@ class Doctor(models.Model):
     education_level = models.CharField(max_length=255) # OK!
     is_verified = models.BooleanField(default=False) # OK!
     doctor_image = models.ImageField(upload_to=get_doctor_path, null=True, blank=True) # OK! BUT JUST URL
-    like_count = models.IntegerField(default=0) # OK!
+    like_count = models.IntegerField(default=0, null=True, blank=True) # OK!
     comment_link = models.URLField(null=True, blank=True) # OK!
 
     extra_info = models.TextField(null=True, blank=True) # OK!
@@ -134,6 +134,14 @@ class Doctor(models.Model):
 
         # Save the model instance
         self.save()
+
+    def calculate_average_rating(self):
+        if self.comments_data:
+            total_stars = sum(
+                comment['star_persent'] for comment_list in self.comments_data for comment in comment_list)
+            number_of_comments = sum(len(comment_list) for comment_list in self.comments_data)
+            return total_stars / number_of_comments if number_of_comments > 0 else 0
+        return 0
 
     def get_doctor_profile_path(self):
         return get_doctor_path(self)

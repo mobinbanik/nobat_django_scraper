@@ -1,16 +1,55 @@
-import os
+import random
+import time
 import requests
 import bs4
-# import undetected_chromedriver
-from .models import Doctor
+from .Logger.Logger import log_message
 from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
 import uuid
 
 
+class IncompleteError(Exception):
+    def __init__(self, url, message="Incomplete"):
+        self.url = url
+        self.message = message
+        super().__init__(self.message)
+
+
+def get_response(url, retries=0, method='GET', payload=None):
+    log_message(f'start func:', f'get_response', custom_level='START_FUNC')
+    if retries > 5:
+        log_message(f'retries: {retries} -> {url}', f'CAN NOT GET TEXT OF THIS URL', custom_level='ERROR - REAMAIN PRFOILE')
+        raise IncompleteError(url, message=f'Incomplete {method}')
+
+    # headers = get_random_headers()
+    if retries > 0:
+        sleep_time = random.randint(10, 20)
+        log_message(f'retries: {retries} -> {url}', f'SLEEP STARTED: {sleep_time}s', custom_level='SLEEP')
+        time.sleep(sleep_time)
+        log_message(f'retries: {retries} -> {url}', f'SLEEP FINISHED', custom_level='SLEEP FINISHED')
+
+    try:
+        log_message(f'send request: {retries} -> {url}', f'requests.{method}', custom_level=f'SEND_{method}')
+        if method == 'POST':
+            response = requests.request('POST', url, data=payload)
+        else:
+            response = requests.get(url,)
+        log_message(f'status code: {response.status_code}', f'requests.{method}', custom_level=f'status_{method}')
+        if response.status_code == 200:
+            return response
+        else:
+            retries += 1
+            return get_response(url, retries)
+    except Exception as e:
+        log_message(f'retries: {retries} -> {url}', e.__str__(), level='ERROR')
+        retries += 1
+        return get_response(url, retries)
+
+
 def download_image_and_save_to_model(url, model_instance, image_field_name):
+    log_message(f'start func:', f'download_image_and_save_to_model', custom_level='START_FUNC')
     # دانلود تصویر از URL
-    response = requests.get(url)
+    response = get_response(url)
     
     # بررسی وضعیت ریسپانس
     if response.status_code == 200:
@@ -27,17 +66,17 @@ def download_image_and_save_to_model(url, model_instance, image_field_name):
         image_field = getattr(model_instance, image_field_name)
         img_temp.seek(0)  # بازنشانی مکان فایل به ابتدای آن
         image_field.save(unique_name, File(img_temp), save=True)
-
+        log_message(f'image saved', f'image for doctor:{model_instance.data_drid}', custom_level='IMAGE_SAVED')
         # بستن و حذف فایل موقت
         img_temp.close()
     else:
         print(f"Failed to download image. Status code: {response.status_code}")
 
 
-
 def download_gallery_for_model(url, model_instance, image_field_name):
+    log_message(f'start func:', f'download_gallery_for_model', custom_level='START_FUNC')
     # دانلود تصویر از URL
-    response = requests.get(url)
+    response = get_response(url)
     
     # بررسی وضعیت ریسپانس
     if response.status_code == 200:
@@ -54,12 +93,11 @@ def download_gallery_for_model(url, model_instance, image_field_name):
         image_field = getattr(model_instance, image_field_name)
         img_temp.seek(0)  # بازنشانی مکان فایل به ابتدای آن
         image_field.save(unique_name, File(img_temp), save=True)
-
+        log_message(f'image saved', f'image for doctor:{model_instance.doctor.data_drid}', custom_level='GALLERY_IMAGE_SAVED')
         # بستن و حذف فایل موقت
         img_temp.close()
     else:
         print(f"Failed to download image. Status code: {response.status_code}")
-
 
 
 def extract_number(text):
@@ -76,7 +114,7 @@ def extract_number(text):
         '۸': '8',
         '۹': '9',
     }
-    
+
     # جایگزینی اعداد فارسی با اعداد انگلیسی
     english_text = ''.join([persian_to_english[char] if char in persian_to_english else char for char in text])
     
@@ -87,21 +125,26 @@ def extract_number(text):
 
 
 def get_comments(data_drid):
+    log_message(f'start func:', f'get_comments', custom_level='START_FUNC')
     url = 'https://nobat.ir/api/public/doctor/comments/all/{data_drid}/0'
-    response = requests.get(url.format(data_drid=data_drid))
+    response = get_response(url.format(data_drid=data_drid))
+    log_message(f'end got comments', f'data_drid: {data_drid}', custom_level='End_COMMENTS')
     return response.json()
 
 
 def get_tells(office_id):
+    log_message(f'start func:', f'get_tells', custom_level='START_FUNC')
     url = 'https://nobat.ir/api/public/doctor/office/tells'
     payload = {
         'office_id': office_id,
     }
-    response = requests.request('POST', url, data=payload)
+    response = get_response(url, method='POST', payload=payload)
+    log_message(f'end got tells', f'office_id: {office_id}', custom_level='End_TELLS')
     return response.json()
 
 
 def parse_office(text: str, office_type: str):
+    log_message(f'start func:', f'parse_office', custom_level='START_FUNC')
     soup = bs4.BeautifulSoup(text, 'html.parser')
 
     _office_id = soup.find('div', attrs={'class': 'office'})
@@ -138,7 +181,7 @@ def parse_office(text: str, office_type: str):
     _office_gallery = list()
     if _office_gallery_tag:
         _office_gallery_tag = _office_gallery_tag.find_all('img')
-        _office_gallery = [x['src'] for x in _office_gallery_tag]
+        _office_gallery = [x['data-src'] for x in _office_gallery_tag]
 
     _office_map_tag = soup.find('div', attrs={'class': 'office-map-container'})
     _office_lat = None
@@ -164,6 +207,7 @@ def parse_office(text: str, office_type: str):
 
 
 def scrape(text) -> dict[str, str]:
+    log_message(f'start func:', f'scrape', custom_level='START_FUNC')
     soup = bs4.BeautifulSoup(text, 'html.parser')
     # print(soup)
     # -\/-
@@ -173,7 +217,6 @@ def scrape(text) -> dict[str, str]:
     if _data:
         _data_drid = _data['data-drid']
         _data_niceid = _data['data-niceid']
-
     # -\/-
     _name = soup.find('h1', attrs={'class': 'doctor-ui-name'})
     _is_verified = None
@@ -183,7 +226,6 @@ def scrape(text) -> dict[str, str]:
         else:
             _is_verified = False
         _name = _name.find('span').text
-
     # -\/-
     offices = soup.find_all('div', attrs={'class': 'office'})
     offices_json_list = list()
@@ -194,7 +236,6 @@ def scrape(text) -> dict[str, str]:
                 office_type = 'visicall'
             json_data = parse_office(str(office), office_type)
             offices_json_list.append(json_data)
-    # TODO get phone number and parse it
     # -\/-
     _nezam_number_tag = soup.find('div', attrs={'class': 'doctor-code'})
     _doctor_code = None
@@ -210,7 +251,6 @@ def scrape(text) -> dict[str, str]:
     if _doctor_image_profile:
         _doctor_image_profile = _doctor_image_profile.find('img')
         _doctor_image_profile = _doctor_image_profile['src']
-
     # -\/-
     _like_count = soup.find('span', attrs={'id': 'followers-count'})
     if _like_count:
@@ -229,7 +269,6 @@ def scrape(text) -> dict[str, str]:
         _extra_info = str(extra_info_tag)
         # for info in extra_info_tag:
         #     _extra_info += info.text
-
     # -\/-
     _social_media_tag = soup.find('div', attrs={'class': 'social-media'})
     _social_media = list()
@@ -237,7 +276,6 @@ def scrape(text) -> dict[str, str]:
         _social_media_tag = _social_media_tag.find_all('a')
         for a in _social_media_tag:
             _social_media.append(a['href'])
-
     # -\/-
     _expertise = soup.find_all('h2', attrs={'class': 'doctor-ui-specialty'})
     _expertise_name_1 = None
@@ -246,7 +284,6 @@ def scrape(text) -> dict[str, str]:
         _expertise_name_1 = _expertise[0].text
         if len(_expertise) > 1:
             _expertise_name_2 = _expertise[1].text
-
     # temp = Doctor.objects.create(
     #     name=name,
     #     is_verified=is_verified,
@@ -269,7 +306,6 @@ def scrape(text) -> dict[str, str]:
         'social_media': _social_media,
         'comments': get_comments(_data_drid),
     }
-
 
 
 def main():
