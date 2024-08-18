@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پروفایل دکتر</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #ccc 1px solid;
+        }
+        header h1 {
+            text-align: center;
+            margin: 0;
+        }
+        .profile {
+            background: #fff;
+            margin: 15px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .profile img {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 50%;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .profile h2 {
+            margin: 0 0 10px;
+            font-size: 1.5em;
+        }
+        .profile p {
+            margin: 0 0 10px;
+            line-height: 1.5;
+        }
+        .images {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .images img {
+            max-width: 200px;
+            max-height: 200px;
+            border: 1px solid #ddd;
+        }
+        .offices {
+            margin-top: 20px;
+        }
+        .office {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            padding: 15px;
+        }
+        .office h3 {
+            margin: 0 0 10px;
+            font-size: 1.2em;
+        }
+        .office p {
+            margin: 0 0 10px;
+            line-height: 1.5;
+        }
+        .office-description {
+            margin: 10px 0;
+        }
+        .office-gallery img {
+            max-width: 100px;
+            max-height: 100px;
+            margin: 5px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>پروفایل دکتر</h1>
+        </div>
+    </header>
+    <div class="container">
+        <div class="profile">
+            <img src="{{ doctor.doctor_image.url }}" alt="{{ doctor.name }}">
+            <h2>{{ doctor.name }}</h2>
+            <p><strong>کد نظام پزشکی:</strong> {{ doctor.nezam_number }}</p>
+            <p><strong>شهر:</strong> {{ doctor.city_name }}</p>
+            <p><strong>تخصص اول:</strong> {{ doctor.expertise_name_1 }}</p>
+            <p><strong>تخصص دوم:</strong> {{ doctor.expertise_name_2 }}</p>
+            <p><strong>سطح تحصیلات:</strong> {{ doctor.education_level }}</p>
+            <p><strong>تعداد لایک:</strong> {{ doctor.like_count }}</p>
+            <p><strong>توضیحات اضافی:</strong></p>
+            <p class="nl-to-br">{{ doctor.extra_info|safe }}</p>
+            <p><a href="{{ doctor.profile_url }}">مشاهده پروفایل آنلاین</a></p>
+            <div class="images">
+                {% for image in doctor.images.all %}
+                    <img src="{{ image.image.url }}" alt="تصویر اضافی">
+                {% endfor %}
+            </div>
+            <div class="offices">
+                {% for office in doctor.office_data %}
+                    <div class="office">
+                        <h3>{{ office.office_title }}</h3>
+                        <p><strong>نوع دفتر:</strong> {{ office.office_type }}</p>
+                        <p><strong>شهر:</strong> {{ office.office_city }}</p>
+                        <p><strong>آدرس:</strong> {{ office.office_address|safe }}</p>
+                        <p class="office-description">{{ office.office_description|safe }}</p>
+                        <p><strong>تلفن‌ها:</strong></p>
+                        <ul>
+                            {% for tell in office.office_tells %}
+                                <li>{{ tell.tel }} - <a href="tel:{{ tell.call }}">تماس</a></li>
+                            {% endfor %}
+                        </ul>
+                        <div class="office-gallery">
+                            {% for img in office.office_gallery %}
+                                <img src="{{ img }}" alt="تصویر دفتر">
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

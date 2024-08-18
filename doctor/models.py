@@ -3,7 +3,7 @@ from django.utils.html import mark_safe
 
 
 def get_doctor_path(instance, file_name=None):
-    return "data/doctors/{0}/{1}/{2}/{3}".format(
+    return "media/doctors/{0}/{1}/{2}/{3}".format(
         instance.city,
         instance.expertise_category,
         instance.pk,
@@ -12,10 +12,11 @@ def get_doctor_path(instance, file_name=None):
 
 
 def get_doctor_path_for_image(instance, file_name=None):
-    return "data/doctors/{0}/{1}/{2}/images/{3}".format(
+    return "media/doctors/{0}/{1}/{2}/{3}/{4}".format(
         instance.doctor.city,
         instance.doctor.expertise_category,
         instance.doctor.pk,
+        instance.office_id,
         file_name,
     )
 
@@ -48,8 +49,8 @@ class Doctor(models.Model):
     # }
 
     # Site Meta Data
-    data_drid = models.CharField(max_length=255, null=True, blank=True) # OK!
-    data_niceid = models.CharField(max_length=255, null=True, blank=True) # OK!
+    data_drid = models.CharField(max_length=255, null=True, blank=True, unique=True) # OK!
+    data_niceid = models.CharField(max_length=255, null=True, blank=True, unique=True) # OK!
     # data_officeid = models.CharField(max_length=255, null=True, blank=True)
 
     # Doctor data
@@ -139,20 +140,27 @@ class Doctor(models.Model):
 
     def preview(self):
         try:
-            return mark_safe(f'<img src = "{self.doctor_image.url}" style="max-width:150px; max-height:150px"/>')
+            return mark_safe(f'<img src = "{self.doctor_image.url}" style="max-width:100px; max-height:100px"/>')
         except Exception as e:
             return e.__str__()
+        
+    def __str__(self):
+        return f'{self.name} {self.nezam_number}'
 
 
 class Image(models.Model):
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, related_name="images")
-    image = models.ImageField(upload_to=get_doctor_path_for_image)
+    image = models.ImageField(upload_to=get_doctor_path_for_image, null=True, blank=True)
+    office_id = models.IntegerField()
 
     def preview(self):
         try:
             return mark_safe(f'<img src = "{self.image.url}" style="max-width:200px; max-height:200px"/>')
         except Exception as e:
             return e.__str__()
+
+    def __str__(self):
+        return self.image.name
 
 
 class Test(models.Model):
@@ -190,6 +198,9 @@ class ProfileUrlToScrape(models.Model):
         null=True,
         blank=True,
     )
+
+    def __str__(self):
+        return self.profile_url
 
 
 class City(models.Model):
